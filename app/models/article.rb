@@ -8,6 +8,7 @@ class Article < ActiveRecord::Base
 
 	scope :published, where("articles.published_at IS NOT NULL")
 	scope :draft, where("articles.published_at IS NULL")
+	scope :recent, lambda{published.where("articles.published_at > ?", 1.week.ago.to_date)}
 
 	def long_title
 		"#{title} - #{published_at}"
